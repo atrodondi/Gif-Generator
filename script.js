@@ -31,14 +31,20 @@ function buttonClick() {
     let searchItem = $(this).data("value");
     console.log(searchItem);
     var queryURL =
-      "https://api.giphy.com/v1/gifs/search?api_key=UWXdBvZNCnxDWEkXJZtZjjSpmNGPuw42&q=" +
+      "https://api.giphy.com/v1/gifs/search?q=" +
       searchItem +
-      "&limit=10&offset=0&rating=G&lang=en";
+      "&api_key=UWXdBvZNCnxDWEkXJZtZjjSpmNGPuw42&limit=10&offset=0&rating=G&lang=en";
     $.ajax({
       url: queryURL,
       method: "GET"
     }).then(function(response) {
-      console.log(response);
+      console.log(response.data);
+      $("#gifDiv").empty();
+      for (var i = 0; i < response.data.length; i++) {
+        $("#gifDiv").append(
+          "<img src='" + response.data[i].images.downsized.url + "'>"
+        );
+      }
     });
   });
 }
