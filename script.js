@@ -28,6 +28,18 @@ function makeGif() {
 function buttonClick() {
   $("button").on("click", function() {
     console.log($(this).data("value"));
+    let searchItem = $(this).data("value");
+    console.log(searchItem);
+    var queryURL =
+      "https://api.giphy.com/v1/gifs/search?api_key=UWXdBvZNCnxDWEkXJZtZjjSpmNGPuw42&q=" +
+      searchItem +
+      "&limit=10&offset=0&rating=G&lang=en";
+    $.ajax({
+      url: queryURL,
+      method: "GET"
+    }).then(function(response) {
+      console.log(response);
+    });
   });
 }
 
