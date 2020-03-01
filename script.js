@@ -25,4 +25,11 @@ function makeGif() {
   }
 }
 
+function buttonClick() {
+  $("button").on("click", function() {
+    console.log($(this).data("value"));
+  });
+}
+
 makeGif();
+buttonClick();
