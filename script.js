@@ -44,7 +44,7 @@ function buttonClick() {
       $("#gifDiv").empty();
       for (var i = 0; i < response.data.length; i++) {
         $("#gifDiv").append(
-          " <span class=' border border-danger float-left'> <p> Rating: " +
+          " <span class=' m-1 float-left'> <p> Rating: " +
             response.data[i].rating +
             "</p>  <img id ='" +
             i +
@@ -59,17 +59,17 @@ function buttonClick() {
 }
 function imageClick() {
   $("#gifDiv").on("click", "img", function() {
-    console.log("clicked!");
+    // console.log("clicked!");
     var clickID = event.target.id;
-    console.log(clickID);
-    console.log(gifObj[clickID]);
+    // console.log(clickID);
+    // console.log(gifObj[clickID]);
     var clicked = gifObj[clickID];
 
     $("#" + clickID).replaceWith(
-      " <span class=' border border-danger float-left'> <img id ='" +
+      "<img id ='" +
         clickID +
         "'class= 'img img-fluid m-1'src='" +
-        gifObj[clickID].images.original.url +
+        gifObj[clickID].images.fixed_height.url +
         "'></span>"
     );
   });
