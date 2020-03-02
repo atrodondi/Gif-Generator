@@ -3,19 +3,29 @@ var items = [
   "cat",
   "moose",
   "bear",
+  "tree",
+  "house",
+  "town",
+  "bus",
   "camel",
   "giraffe",
+  "car",
   "elephant",
   "alligator",
+  "milk",
   "penguin",
   "seal",
+  "soda",
   "otter",
   "whale",
-  "dolphin"
+  "watermelon",
+  "dolphin",
+  "mountain"
 ];
 var gifObj;
-
-function makeGif() {
+//function that populates the button div with different buttons from the item array
+function makeButton() {
+  $("#buttonDiv").empty();
   for (var i = 0; i < items.length; i++) {
     $("#buttonDiv").append(
       "<button class='btn btn-info m-1' data-value = " +
@@ -26,12 +36,11 @@ function makeGif() {
     );
   }
 }
-
+//function that triggers when an item button is pressed to make ajax calls to populate the gif div with gifs
 function buttonClick() {
-  $("button").on("click", function() {
-    console.log($(this).data("value"));
+  $("#buttonDiv").on("click", ".btn-info", function() {
+    event.preventDefault();
     let searchItem = $(this).data("value");
-    console.log(searchItem);
     var queryURL =
       "https://api.giphy.com/v1/gifs/search?q=" +
       searchItem +
@@ -40,13 +49,12 @@ function buttonClick() {
       url: queryURL,
       method: "GET"
     }).then(function(response) {
-      console.log(response.data);
       $("#gifDiv").empty();
       for (var i = 0; i < response.data.length; i++) {
         $("#gifDiv").append(
           " <span class=' m-1 float-left'> <p> Rating: " +
             response.data[i].rating +
-            "</p>  <img id ='" +
+            "</p>  <img  id ='" +
             i +
             "'class= 'img img-fluid m-1'src='" +
             response.data[i].images.fixed_height_still.url +
@@ -57,24 +65,48 @@ function buttonClick() {
     });
   });
 }
+//function that controls what happens when an image/gif is clicked. stop/animate
 function imageClick() {
   $("#gifDiv").on("click", "img", function() {
-    // console.log("clicked!");
     var clickID = event.target.id;
-    // console.log(clickID);
-    // console.log(gifObj[clickID]);
     var clicked = gifObj[clickID];
-
-    $("#" + clickID).replaceWith(
-      "<img id ='" +
-        clickID +
-        "'class= 'img img-fluid m-1'src='" +
-        gifObj[clickID].images.fixed_height.url +
-        "'></span>"
-    );
+    if ($("#" + clickID).attr("src") == clicked.images.fixed_height_still.url) {
+      $("#" + clickID).replaceWith(
+        "<img id ='" +
+          clickID +
+          "'class= 'img img-fluid m-1'src='" +
+          clicked.images.fixed_height.url +
+          "'>"
+      );
+    } else {
+      $("#" + clickID).replaceWith(
+        "<img id ='" +
+          clickID +
+          "'class= 'img img-fluid m-1'src='" +
+          clicked.images.fixed_height_still.url +
+          "'>"
+      );
+    }
+  });
+}
+//function that controls what happens when the user creates a new item button
+function makeGif() {
+  $("#findGif").on("click", function() {
+    var Gif = $("#gifInput").val();
+    if ($("#gifInput").val() == "") {
+      alert("You have to type something in the search bar!");
+    } else {
+      if (items.includes(Gif)) {
+        alert("You've already have a search button for that thing!");
+      } else {
+        items.push(Gif);
+        makeButton();
+      }
+    }
   });
 }
 
-makeGif();
+makeButton();
 buttonClick();
 imageClick();
+makeGif();

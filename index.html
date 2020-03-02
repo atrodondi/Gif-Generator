@@ -16,7 +16,18 @@
       <div id="buttonDiv" class="row"></div>
       <div class="row">
         <div id="gifDiv" class="col-8"></div>
-        <div class="col-4"></div>
+        <div class="col-4">
+          <form onSubmit="return false;" id="makeGifForm">
+            <label for="gifInput">Add a button!</label>
+            <input
+              type="search"
+              autocomplete="off"
+              id="gifInput"
+              value=""
+            /><br />
+            <input id="findGif" type="button" value="Create Button" />
+          </form>
+        </div>
       </div>
     </div>
     <script
