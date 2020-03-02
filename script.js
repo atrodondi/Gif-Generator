@@ -13,6 +13,8 @@ var items = [
   "whale",
   "dolphin"
 ];
+var gifObj;
+
 function makeGif() {
   for (var i = 0; i < items.length; i++) {
     $("#buttonDiv").append(
@@ -42,12 +44,37 @@ function buttonClick() {
       $("#gifDiv").empty();
       for (var i = 0; i < response.data.length; i++) {
         $("#gifDiv").append(
-          "<img src='" + response.data[i].images.downsized.url + "'>"
+          " <span class=' border border-danger float-left'> <p> Rating: " +
+            response.data[i].rating +
+            "</p>  <img id ='" +
+            i +
+            "'class= 'img img-fluid m-1'src='" +
+            response.data[i].images.fixed_height_still.url +
+            "'></span>"
         );
       }
+      gifObj = response.data;
     });
+  });
+}
+function imageClick() {
+  $("#gifDiv").on("click", "img", function() {
+    console.log("clicked!");
+    var clickID = event.target.id;
+    console.log(clickID);
+    console.log(gifObj[clickID]);
+    var clicked = gifObj[clickID];
+
+    $("#" + clickID).replaceWith(
+      " <span class=' border border-danger float-left'> <img id ='" +
+        clickID +
+        "'class= 'img img-fluid m-1'src='" +
+        gifObj[clickID].images.original.url +
+        "'></span>"
+    );
   });
 }
 
 makeGif();
 buttonClick();
+imageClick();
