@@ -51,17 +51,17 @@ function buttonClick() {
       console.log(response.data);
       for (let i = 0; i < response.data.length; i++) {
         $("#gifDiv").prepend(
-          " <span id ='span" +
+          " <span id ='" +
             idCount +
-            "' class=' m-1 d-inline-block'>  <img  id ='" +
-            idCount +
-            "'class= 'img img-fluid m-1'src='" +
+            "' class=' m-1 d-inline-block'>  <img class= 'img img-fluid m-1'src='" +
             response.data[i].images.fixed_height_still.url +
             "' data-still='" +
             response.data[i].images.fixed_height_still.url +
             "' data-animate = '" +
             response.data[i].images.fixed_height.url +
-            "' data-state='still'> <p> Rating: " +
+            "' data-state='still'><p>" +
+            response.data[i].title +
+            " <p> Rating: " +
             response.data[i].rating +
             " <button id='favID" +
             idCount +
@@ -113,7 +113,7 @@ function favClick() {
     //below was to get an id from a similar id, it looks crappy but it worked :/
     $("#favorites").append(
       $(
-        "#span" +
+        "#" +
           $("#" + pickFav)
             .attr("id")
             .match(/\d+/)
